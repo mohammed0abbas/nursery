@@ -15,7 +15,7 @@ app = Flask(__name__, template_folder=template_path)
 @app.route("/")
 def home():
 
-   data = db.execute("SELECT * FROM nursery;")
+   data = db.execute("SELECT *  FROM nursery;")
    return render_template('index.html',data = data)
 
 
