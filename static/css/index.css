@@ -1,0 +1,28 @@
+.first_page_polt{
+    background: url(../imgs/bg.jpg) !important;
+    background-position: center;
+    background-size: cover !important;
+    /* min-height: 90vh !important; */
+    position: relative;
+    top: 3rem !important;
+    
+}
+.first_page_polt::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+}
+.lead_bg{
+    z-index: 1;
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(30px);
+    padding: 10px;
+    margin: 0;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}

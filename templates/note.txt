@@ -1,0 +1,22 @@
+ {% for i in size %}
+
+            {% include 'small_card.html' %}
+
+              {% block name %}
+                {{ data[i]['name'] }}
+
+              {% endblock %}
+
+              {% block des %}
+
+              {{ data[i]['des'] }}
+              
+              {% endblock %}
+              {% block img_path %}
+
+              {{ data[1][img_path1] }}
+
+              {% endblock %}
+
+          {% endfor %}
+        
