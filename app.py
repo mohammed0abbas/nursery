@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,Request
 from cs50 import SQL
 
 db = SQL("sqlite:///garden.db")
@@ -37,14 +37,13 @@ def register():
 
 @app.route("/card/<int:id_p>")
 def card(id_p):
-   id_p = 0
    name = db.execute('select name,des,price from plants where id = ?;',id_p)
+   print(id_p)
   
    name_nursery = db.execute('select name from nursery join plants on plants.nursery_id = nursery.id where plants.id = ? ;',id_p)
    like = db.execute('select count(*) from like join plants on plants.id = like.plants_id where plants.id = ? ;',id_p)
    print(name)
    
-   print(des_p)
    print(like)
    print(name)
 
@@ -53,10 +52,26 @@ def card(id_p):
 
 
 
-@app.route("/profile")
+@app.route("/profile",methods = ['GET'])
 def profile():
+   id_p = request.args.get('id_p')
 
-   return render_template('profile.html')
+   name_n = db.execute('SELECT name from nursery where id = ? ; ' , id_p)
+   phone = db.execute('SELECT phone from nursery where id = ? ; ' , id_p)
+   size_p = db.execute('SELECT count(*) from plants join nursery on nursery.id = plants.nursery_id where nursery_id=? ; ' , id_p)
+   name_p = db.execute('select plants.name from plants join nursery on nursery.id = plants.nursery_id where nursery_id =?',id_p)
+   print(name_p)
+   return render_template('profile.html',
+                        name_n = name_n[0]['name'],
+                        phone = phone[0]['phone'],
+                        size_p = size_p[0]['count(*)'],
+                        name_p1 = name_p[0]['name'],
+                        name_p2 = name_p[1]['name'],
+                        name_p3 = name_p[2]['name'],
+                        des1 = name_p[0]['des'],
+                        des2 = name_p[1]['des'],
+                        des3 = name_p[2]['des'] 
+                          )
 
 
 
