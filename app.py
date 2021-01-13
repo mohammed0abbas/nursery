@@ -73,7 +73,15 @@ def profile():
                         des3 = name_p[2]['des'] 
                           )
 
-
+# name_n = name_n[0]['name'],
+#                         phone = phone[0]['phone'],
+#                         size_p = size_p[0]['count(*)'],
+#                         name_p1 = name_p,
+#                         name_p2 = name_p,
+#                         name_p3 = name_p,
+#                         des1 = name_p,
+#                         des2 = name_p,
+#                         des3 = name_p 
 
 
 @app.route("/element")
