@@ -10,13 +10,77 @@ db = SQL("sqlite:///garden.db")
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
-
+profiles = [
+                  {
+                  "id":"1",
+                  "name":"زهور المتنبي",
+                  "place":"العراق - البصرة",
+                  "phone":"07723456789",
+                  "posts":"6",
+                  "likes":"176",
+                  "buyers":"62",
+                  "description":"خصم 30% عند الشراء من زهور المتنبي عن طريق الموقع يوفر مشتل زهور المتنبي ورود الزينه والاشجار المثمرة.",
+                  "img":"imgs/m1.jpg"
+                  },
+                   {
+                  "id":"2",
+                  "name":"مشتل الربيع",
+                  "place":"العراق - كركوك",
+                  "phone":"07723456789",
+                  "likes":"356",
+                  "posts":"9",
+                  "buyers":"12",
+                  "description":"يوفر مشتل الربيع اجمل واندر النباتات وبالأخص الزهوء والورود النادرة والمميزة مع خصم 10% عند الشراء من الموقع.",
+                  "img":"imgs/images.jpg"
+                  },                   {
+                  "id":"3",
+                  "name":"مشتل الدخيل",
+                  "place":"العراق - كربلاء",
+                  "phone":"07723456789",
+                  "likes":"116",
+                  "posts":"4",
+                  "buyers":"21",
+                  "description":"خصم 20% عند الشراء من مشتل الدخيل عن طريق الموقع يوفر مشتل الدخيل اشجار ونباتات شتوية وصيفية باسعار بخسه.",
+                  "img":"imgs/img2.jpg"
+                  },
+                   {
+                  "id":"4",
+                  "name":"أسراء لنباتات الزينة",
+                  "place":"العراق - الموصل",
+                  "phone":"07723456789",
+                  "likes":"276",
+                  "posts":"3",
+                  "buyers":"53",
+                  "description":"مشتل الاسراء لنباتات الزينة يوفر جميع نبات الزينه وبمختلف الانواع والاسعارة مع خصم يصل الئ 50% من السعر عند الشراء من الموقع.",
+                  "img":"imgs/download.jpg"
+                  },
+                                     {
+                  "id":"5",
+                  "name":"مشتل الجامعة",
+                  "place":"العراق - بغداد",
+                  "phone":"07723456789",
+                  "posts":"24",
+                  "likes":"56",
+                  "buyers":"132",
+                  "description":"مشتل الجامعة من اقدم المشاتل في بغداد واكبرهم حيث يوفر اكثر من 100 نوع من الاشجارة المثمرة والنباتات والزهور المميزة خصم 30% عند الشراء عن طريق الموقع.",
+                  "img":"imgs/img3.jpg"
+                  },                                     {
+                  "id":"5",
+                  "name":"مشتل الكريعات",
+                  "place":"العراق - بغداد",
+                  "phone":"07723456789",
+                  "posts":"6",
+                  "likes":"26",
+                  "buyers":"3",
+                  "description":"خصم 10% من السعر عند الشراء من مشتل الكريعات عن طريق الموقع متوفر داخل المشتل اشجار النخيل والاكاسيا .",
+                  "img":"imgs/img4.jpg"
+                  },
+]
 
 @app.route("/")
 def home():
-
-   data = db.execute("SELECT *  FROM nursery;")
-   return render_template('index.html',data = data)
+    
+    return render_template('index.html',profiles=profiles)
 
 
 
@@ -54,24 +118,18 @@ def card(id_p):
 
 @app.route("/profile",methods = ['GET'])
 def profile():
-   id_p = request.args.get('id_p')
-
-   name_n = db.execute('SELECT name from nursery where id = ? ; ' , id_p)
-   phone = db.execute('SELECT phone from nursery where id = ? ; ' , id_p)
-   size_p = db.execute('SELECT count(*) from plants join nursery on nursery.id = plants.nursery_id where nursery_id=? ; ' , id_p)
-   name_p = db.execute('select plants.name from plants join nursery on nursery.id = plants.nursery_id where nursery_id =?',id_p)
-   print(name_p)
-   return render_template('profile.html',
-                        name_n = name_n[0]['name'],
-                        phone = phone[0]['phone'],
-                        size_p = size_p[0]['count(*)'],
-                        name_p1 = name_p[0]['name'],
-                        name_p2 = name_p[1]['name'],
-                        name_p3 = name_p[2]['name'],
-                        des1 = name_p[0]['des'],
-                        des2 = name_p[1]['des'],
-                        des3 = name_p[2]['des'] 
-                          )
+    id_p = request.args.get('id_p')
+    current_id_data= [];
+    for profile in profiles :
+      if(profile['id']==id_p):
+         print("profile :",profile) 
+         current_id_data.append(profile)     
+   # name_n = db.execute('SELECT name from nursery where id = ? ; ' , id_p)
+   # phone = db.execute('SELECT phone from nursery where id = ? ; ' , id_p)
+   # size_p = db.execute('SELECT count(*) from plants join nursery on nursery.id = plants.nursery_id where nursery_id=? ; ' , id_p)
+   # name_p = db.execute('select plants.name from plants join nursery on nursery.id = plants.nursery_id where nursery_id =?',id_p)
+    
+    return render_template('profile.html',profile=current_id_data[0])
 
 # name_n = name_n[0]['name'],
 #                         phone = phone[0]['phone'],
@@ -95,7 +153,7 @@ def element():
 @app.route("/browser")
 def browser():
 
-   return render_template('browser.html')
+   return render_template('browser.html',profiles=profiles)
 
 
    
