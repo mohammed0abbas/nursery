@@ -6,14 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/insert" method="GET">
-        <input type="text"  placeholder="name" name='name'>
-        <input type="text"  placeholder="phonr"  name='phone'>
-        <input type="text"  placeholder="des " name='des'>
-        <input type="text"  placeholder="img_path" name='img_path'>
-        <input type="text"  placeholder="path" name='path'>
-        <button type="submit">ادخال</button>
+    <form action="/insert.html" method="POST">
+        <input type="text"  placeholder="name" name='name'><br/>
+        <input type="text"  placeholder="phonr"  name='phone'><br/>
+        <input type="text"  placeholder="des" name='des'><br/>
+        <input type="text"  placeholder="img_path" name='img_path'><br/>
+        <input type="text"  placeholder="path" name='path'><br/>
+        <button type="submit">ادخال</button><br/>
+        {% if inserted %}
+        <h4>تم ادخال البيانات بنجاح</h4>
+        {% endif %}
     </form>
+
 
          
 </body>

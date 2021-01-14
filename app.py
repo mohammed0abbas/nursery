@@ -1,81 +1,16 @@
 import os
+# from "data/profiles" import profiles
+import time
 from flask import Flask, render_template,request,Request
 from cs50 import SQL
 
 db = SQL("sqlite:///garden.db")
-
-
+# db.cursu
 
 
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
-profiles = [
-                  {
-                  "id":"1",
-                  "name":"زهور المتنبي",
-                  "place":"العراق - البصرة",
-                  "phone":"07723456789",
-                  "posts":"6",
-                  "likes":"176",
-                  "buyers":"62",
-                  "description":"خصم 30% عند الشراء من زهور المتنبي عن طريق الموقع يوفر مشتل زهور المتنبي ورود الزينه والاشجار المثمرة.",
-                  "img":"imgs/m1.jpg"
-                  },
-                   {
-                  "id":"2",
-                  "name":"مشتل الربيع",
-                  "place":"العراق - كركوك",
-                  "phone":"07723456789",
-                  "likes":"356",
-                  "posts":"9",
-                  "buyers":"12",
-                  "description":"يوفر مشتل الربيع اجمل واندر النباتات وبالأخص الزهوء والورود النادرة والمميزة مع خصم 10% عند الشراء من الموقع.",
-                  "img":"imgs/images.jpg"
-                  },                   {
-                  "id":"3",
-                  "name":"مشتل الدخيل",
-                  "place":"العراق - كربلاء",
-                  "phone":"07723456789",
-                  "likes":"116",
-                  "posts":"4",
-                  "buyers":"21",
-                  "description":"خصم 20% عند الشراء من مشتل الدخيل عن طريق الموقع يوفر مشتل الدخيل اشجار ونباتات شتوية وصيفية باسعار بخسه.",
-                  "img":"imgs/img2.jpg"
-                  },
-                   {
-                  "id":"4",
-                  "name":"أسراء لنباتات الزينة",
-                  "place":"العراق - الموصل",
-                  "phone":"07723456789",
-                  "likes":"276",
-                  "posts":"3",
-                  "buyers":"53",
-                  "description":"مشتل الاسراء لنباتات الزينة يوفر جميع نبات الزينه وبمختلف الانواع والاسعارة مع خصم يصل الئ 50% من السعر عند الشراء من الموقع.",
-                  "img":"imgs/download.jpg"
-                  },
-                                     {
-                  "id":"5",
-                  "name":"مشتل الجامعة",
-                  "place":"العراق - بغداد",
-                  "phone":"07723456789",
-                  "posts":"24",
-                  "likes":"56",
-                  "buyers":"132",
-                  "description":"مشتل الجامعة من اقدم المشاتل في بغداد واكبرهم حيث يوفر اكثر من 100 نوع من الاشجارة المثمرة والنباتات والزهور المميزة خصم 30% عند الشراء عن طريق الموقع.",
-                  "img":"imgs/img3.jpg"
-                  },                                     {
-                  "id":"5",
-                  "name":"مشتل الكريعات",
-                  "place":"العراق - بغداد",
-                  "phone":"07723456789",
-                  "posts":"6",
-                  "likes":"26",
-                  "buyers":"3",
-                  "description":"خصم 10% من السعر عند الشراء من مشتل الكريعات عن طريق الموقع متوفر داخل المشتل اشجار النخيل والاكاسيا .",
-                  "img":"imgs/img4.jpg"
-                  },
-]
 
 @app.route("/")
 def home():
@@ -161,18 +96,30 @@ def browser():
 
 
 
-@app.route('/insert.html',methods =['GET','post'])
-def edit():
+@app.route('/insert.html',methods =['GET','POST'])
+def edit():   
+   print('-----edit function is running..')
+   if request.method=='GET':
+      print('-----Get methon detected.. returining insert.html template..')
+      return render_template('insert.html')
+   else:
+      print('-----Post method detected')
+      name = request.form.get("name")
+      phone = request.form.get("phone")
+      img_path = request.form.get("img_path")
+      des = request.form.get("des")
+      path = request.form.get("path")
+      print('-----Post data recived...')
+      # db.cursor()
+      db.execute('INSERT INTO  nursery(name,phone,img_path1,des,path) VALUES(?,?,?,?,?);',name ,phone,img_path,des,path)
+      print('-----INSERT SUCCESS')
+      # db.commit()
+      # db.close()
+      print('-----Commit is done. redirecting...')
+      # return render_template('insert.html?hi')
+      return render_template('insert.html',inserted=True)
 
-   name = request.form.get("name")
-   img_path = request.form.get("img_path")
-   des = request.form.get("des")
-   phone = request.form.get("phone")
-   path = request.form.get("path")
-
-   db.execute('INSERT INTO  nursery(name,phone,img_path,des,path) VALUES(?,?,?,?,?);',name ,phone,img_path,des,path)
-
-   return render_template('insert.html')
+      
 
 
 
