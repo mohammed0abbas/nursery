@@ -14,8 +14,9 @@ app = Flask(__name__, template_folder=template_path)
 
 @app.route("/")
 def home():
-  
-   return render_template('index.html',profiles=profiles)
+    profiles = db.execute('select * from nursery')
+    print("---------count :",len(profiles))
+    return render_template('index.html',profiles=profiles)
 
 
 
@@ -117,6 +118,31 @@ def edit():
       return render_template('insert.html',inserted=True)
 
       
+
+
+@app.route('/plant.html',methods =['GET','POST'])
+def plant():   
+   print('-----edit function is running..')
+   if request.method=='GET':
+      print('-----Get methon detected.. returining insert.html template..')
+      return render_template('plant.html')
+   else:
+      print('-----Post method detected')
+      name = request.form.get("name")
+      img_path = request.form.get("img_path")
+      des = request.form.get("des")
+      price=request.form.get("price")
+      nur_id = request.form.get("n_id")
+      print('-----Post data recived...')
+      # db.cursor()
+      db.execute('INSERT INTO  plants(name,img_path1,des,price,nursery_id) VALUES(?,?,?,?,?);',name ,img_path,des,price,nur_id)
+      print('-----INSERT SUCCESS')
+      # db.commit()
+      # db.close()
+      print('-----Commit is done. redirecting...')
+      # return render_template('insert.html?hi')
+      time.sleep(5) 
+      return render_template('plant.html',inserted=True)
 
 
 

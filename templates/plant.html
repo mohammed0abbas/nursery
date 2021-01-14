@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/plant.html" method="POST">
+        <input type="text"  placeholder="name" name='name'><br/>
+        <input type="text"  placeholder="img_path"  name='img_path'><br/><br/>
+
+        <input type="text"  placeholder="price" name='price'><br/>
+        <input type="text"  placeholder="n_id" name='n_id'><br/>
+        <textarea dir="rtl" name="des">
+
+        </textarea>
+        <button type="submit">ادخال</button><br/>
+        {% if inserted %}
+        <h4>تم ادخال البيانات بنجاح</h4>
+        {% endif %}
+    </form>
+
+
+         
+</body>
+</html>
