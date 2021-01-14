@@ -14,8 +14,8 @@ app = Flask(__name__, template_folder=template_path)
 
 @app.route("/")
 def home():
-    
-    return render_template('index.html',profiles=profiles)
+  
+   return render_template('index.html',profiles=profiles)
 
 
 
@@ -51,20 +51,16 @@ def card(id_p):
 
 
 
-@app.route("/profile",methods = ['GET'])
-def profile():
-    id_p = request.args.get('id_p')
-    current_id_data= [];
-    for profile in profiles :
-      if(profile['id']==id_p):
-         print("profile :",profile) 
-         current_id_data.append(profile)     
-   # name_n = db.execute('SELECT name from nursery where id = ? ; ' , id_p)
-   # phone = db.execute('SELECT phone from nursery where id = ? ; ' , id_p)
-   # size_p = db.execute('SELECT count(*) from plants join nursery on nursery.id = plants.nursery_id where nursery_id=? ; ' , id_p)
-   # name_p = db.execute('select plants.name from plants join nursery on nursery.id = plants.nursery_id where nursery_id =?',id_p)
-    
-    return render_template('profile.html',profile=current_id_data[0])
+#@app.route("/profile",methods = ['GET'])
+#def profile():
+#    id_p = request.args.get('id_p')
+#      
+#    name_n = db.execute('SELECT name from nursery where id = ? ; ' , id_p)
+#    phone = db.execute('SELECT phone from nursery where id = ? ; ' , id_p)
+#    size_p = db.execute('SELECT count(plants.name) from plants join nursery on nursery.id = plants.nursery_id where nursery_id=? ; ' , id_p)
+#    name_p = db.execute('select plants.name from plants join nursery on nursery.id = plants.nursery_id where nursery_id =?',id_p)
+#    
+#    return render_template('profile.html',profile=current_id_data[0])
 
 # name_n = name_n[0]['name'],
 #                         phone = phone[0]['phone'],
