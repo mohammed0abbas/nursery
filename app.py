@@ -117,6 +117,7 @@ def edit():
       # db.close()
       print('-----Commit is done. redirecting...')
       # return render_template('insert.html?hi')
+      time.sleep(5) 
       return render_template('insert.html',inserted=True)
 
       
