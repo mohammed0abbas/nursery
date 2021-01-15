@@ -55,24 +55,15 @@ def card(id_p):
 @app.route("/profile",methods = ['GET'])
 def profile():
     id_p = request.args.get('id_p')
-#      
-    profile_s = db.execute('SELECT * from nursery where id = ? ; ' , id_p)
-#    phone = db.execute('SELECT phone from nursery where id = ? ; ' , id_p)
-#    size_p = db.execute('SELECT count(plants.name) from plants join nursery on nursery.id = plants.nursery_id where nursery_id=? ; ' , id_p)
+    profiles = db.execute('select * from nursery where id = ?;',id_p)
+    profiles_p = db.execute('select * from plants  where nursery_id = ? ;',id_p)
+    posts = db.execute("select count() from plants  where nursery_id = ? ;",id_p )
+    like = db.execute("select count() from like  where nursery_id = ? ;",id_p )
 #    name_p = db.execute('select plants.name from plants join nursery on nursery.id = plants.nursery_id where nursery_id =?',id_p)
 #    
-    print('------------',profile_s)
-    return render_template('profile.html',profile=profile_s[0])
+    print('------------')
+    return render_template('profile.html',profiles = profiles,profiles_p = profiles_p,posts = posts,like =like)
 
-# name_n = name_n[0]['name'],
-#                         phone = phone[0]['phone'],
-#                         size_p = size_p[0]['count(*)'],
-#                         name_p1 = name_p,
-#                         name_p2 = name_p,
-#                         name_p3 = name_p,
-#                         des1 = name_p,
-#                         des2 = name_p,
-#                         des3 = name_p 
 
 
 @app.route("/element")
@@ -86,7 +77,7 @@ def element():
 @app.route("/browser")
 def browser():
 
-   return render_template('browser.html',profiles=profiles)
+   return render_template('browser.html')
 
 
    
