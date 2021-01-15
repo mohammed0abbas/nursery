@@ -71,10 +71,12 @@ def element():
 
    plants_id = request.args.get("plants_id")
    plants = db.execute('select * from plants where nursery_id = ?',plants_id )
-   print(plants)
+   nursery = db.execute('select * from nursery where id = ?',plants_id )
+   
+   
 
 
-   return render_template('element.html',plants = plants)
+   return render_template('element.html',plants = plants,nursery = nursery)
 
 
 
