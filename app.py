@@ -66,10 +66,15 @@ def profile():
 
 
 
-@app.route("/element")
+@app.route("/element",methods = ['GET'])
 def element():
 
-   return render_template('element.html')
+   plants_id = request.args.get("plants_id")
+   plants = db.execute('select * from plants where nursery_id = ?',plants_id )
+   print(plants)
+
+
+   return render_template('element.html',plants = plants)
 
 
 
