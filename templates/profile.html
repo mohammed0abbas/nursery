@@ -58,7 +58,7 @@
 
 <div class="row">
             <div class="col-lg-9 col-md-9 col-sm-12 p-0 m-0">
-                <img style="width: 100px; height: 100px;;border-radius: 50% !important;" src="{{url_for('static',filename=profiles.img_path1)}}" class="rounded float-start mx-2" alt="...">
+                <img style="width: 100px; height: 100px;;border-radius: 50% !important;" src="{{url_for('static',filename=profiles[0]['img_path1'])}}" class="rounded float-start mx-2" alt="...">
                 <blockquote class="blockquote mb-0 " style="text-align: right;">
                     <p>{{profiles[0]['name']}}</p>
                     <footer class="blockquote-footer text-muted">
