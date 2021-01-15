@@ -1,5 +1,5 @@
 {% include 'header.html'%}
-<title> {{plants[0].name}} </title>
+<title> {{plants.name}} </title>
 <section class="py-1 text-center container">
 
     <div class="row ">
@@ -8,7 +8,7 @@
             <div class="col-lg-6 col-md-6 col-sm-12 card  shadow-lg" >
                 <div class="col-lg-12 col-md-12 col-sm-12 p-2 m-2">
                     <blockquote class="blockquote mb-0 " style="text-align: right;">
-                        <p>{{plants[0].name}}</p>
+                        <p>{{plants.name}}</p>
                         <footer class="blockquote-footer text-muted">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                                 <path d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
@@ -17,7 +17,7 @@
                               نشر بواسطة :
                               <b>
 
-                                  {{nursery[0]['name']}} 
+                                  {{nursery.name}} 
                                 </b>
                         </footer>
                         <footer class="blockquote-footer text-muted">
@@ -25,13 +25,13 @@
                                 <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
                               </svg>
                                     احجز الان : 
-                              {{nursery[0]['phone']}}
+                              {{nursery.phone}}
                         </footer>
                       </blockquote>
                 </div>
               <div class="col p-2 text-start">
                 <p>
-                    {{nursery[0]['des']}} 
+                    {{plants.des}} 
       
                 </p>
              </div>
@@ -49,7 +49,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
                                         <path d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                                     </svg>
-                                    {{nursery[0]['id']*7}} اعجاب
+                                    {{nursery.id*7}} اعجاب
                                 </button>
                             </form>
                         </li>
@@ -68,7 +68,7 @@
     </div>
     <div class=" col-lg-6 col-md-6 col-sm-12 ">
 
-        <div class="rounded shadow-lg"  style="width: 100%;height: 300px;background: url({{url_for('static',filename='imgs/red.jpg')}});background-size:cover;background-position:center">
+        <div class="rounded shadow-lg"  style="width: 100%;height: 300px;background: url({{url_for('static',filename=plants.img_path1)}});background-size:cover;background-position:center">
             
 </div>                    
 </div>

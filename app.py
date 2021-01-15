@@ -70,13 +70,13 @@ def profile():
 def element():
 
    plants_id = request.args.get("plants_id")
-   plants = db.execute('select * from plants where nursery_id = ?',plants_id )
-   nursery = db.execute('select * from nursery where id = ?',plants_id )
+   plants = db.execute('select * from plants where id=?',plants_id )
+   nursery = db.execute('select * from nursery where id=?',plants[0]['nursery_id'])
    
    
 
 
-   return render_template('element.html',plants = plants,nursery = nursery)
+   return render_template('element.html',plants = plants[0],nursery = nursery[0])
 
 
 
