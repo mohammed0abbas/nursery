@@ -81,8 +81,8 @@ def element():
 
 @app.route("/browser")
 def browser():
-
-   return render_template('browser.html')
+   profiles = db.execute('select * from nursery')
+   return render_template('browser.html',profiles=profiles)
 
 
    
