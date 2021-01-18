@@ -1,8 +1,10 @@
 import os
 # from "data/profiles" import profiles
 import time
-from flask import Flask, render_template,request,Request
+from flask import Flask, render_template,request,Request,redirect,session
 from cs50 import SQL
+from werkzeug.security import check_password_hash, generate_password_hash
+
 
 db = SQL("sqlite:///garden.db")
 # db.cursu
@@ -15,40 +17,70 @@ app = Flask(__name__, template_folder=template_path)
 @app.route("/")
 def home():
     profiles = db.execute('select * from nursery')
-    print("---------count :",len(profiles))
     return render_template('index.html',profiles=profiles)
 
 
 
-@app.route("/login")
+@app.route("/login",methods =['GET','POST'])
 def login():
 
-   return render_template('login.html') 
+   if request.method == 'POST':
+      check = db.execute('select * from user')
+      err = None
+      print(request.form.get("phone"))
+      phone =request.form.get('phone')
+      for ch in check:
+         if phone in ch['phone'] or not phone in ch['email']:
+            if request.form.get("password") != ch['password']:
+               err ='الرمز خاطئ'
+               return render_template('login.html',err = err)
+            
+            else:
+               return redirect('/')
+         else:
+            err = 'رقم الهاتف او البريد الالكتروني غير موجود'
+            return render_template('login.html',err = err)
+
+   else:
+      return render_template('login.html') 
 
 
 
-@app.route("/signup")
+@app.route("/signup",methods=['POST','GET'])
 def register():
+   if request.method == 'POST':
 
-   return render_template('register.html') 
+      error = None
+      name = request.form.get('name')
+      phone =  request.form.get('phone')
+      email =  request.form.get('email')
+
+      if request.form.get('repassword') != request.form.get('password'):
+         error = 'كلمة السر غير متطابقة'
+         return render_template('register.html',error = error)
+
+      chek = db.execute('select id,name,email,phone from user') 
+      for ch in chek:
+
+         if name in ch['name']:
+            error = 'الاسم موجود بالفعل'
+            return render_template('register.html',error = error)
+
+         if email in ch['email'] or phone in ch['phone']: 
+            error = 'لديك حساب بالفعل الرجاء الضغط على تسجيل الدخول'
+            return render_template('register.html',error = error)
+      
 
 
+      db.execute('insert into user(name,email,phone,password) values(?,?,?,?)',name,email,phone,request.form.get('password'))
+      #s_id = ('select id from user where name = ?',name)
+      #session["user_id"] = s_id[0]['id']     
+      return redirect('/')
 
+   else:
+      return render_template('register.html')
 
-@app.route("/card/<int:id_p>")
-def card(id_p):
-   name = db.execute('select name,des,price from plants where id = ?;',id_p)
-   print(id_p)
-  
-   name_nursery = db.execute('select name from nursery join plants on plants.nursery_id = nursery.id where plants.id = ? ;',id_p)
-   like = db.execute('select count(*) from like join plants on plants.id = like.plants_id where plants.id = ? ;',id_p)
-   print(name)
-   
-   print(like)
-   print(name)
-
-   return render_template('card.html')    
-
+ 
 
 
 
@@ -72,9 +104,14 @@ def element():
    plants_id = request.args.get("plants_id")
    plants = db.execute('select * from plants where id=?',plants_id )
    nursery = db.execute('select * from nursery where id=?',plants[0]['nursery_id'])
+  # like = request.args.get("like")
+  # if like == 1:
+  #    like = 0
+  #    return redirect("/element")
+  # else:
+  #    like = 1 
+  #    return redirect("/element")  
    
-   
-
 
    return render_template('element.html',plants = plants[0],nursery = nursery[0])
 
@@ -143,7 +180,16 @@ def plant():
       time.sleep(5) 
       return render_template('plant.html',inserted=True)
 
+#@app.route("/like.html",methods = ['POST'])
+#def like():
+#   if request.form.get("post_id") ==1:
+#      like = 24
+#   else:
+#      like = 23   
+#
+#   return redirect("element.html",like)
+
 
 
 if __name__ == "__main__":
-   app.run(debug=True,port = 9000)  
+   app.run(debug=True)  
