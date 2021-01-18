@@ -88,9 +88,12 @@
           <div class="account-wall mx-auto">
               <img class="profile-img" src="{{url_for('static',filename='imgs/user.png')}}"
                   alt="">
-              <form class="form-signin">
-              <input type="text" class="form-control" placeholder="البريد الالكتروني" required autofocus>
-              <input type="password" class="form-control" placeholder="كلمة السر" required>
+                <br/>
+                {{err}}
+
+              <form class="form-signin" action="/login" method="POST">
+              <input type="text" name="phone" class="form-control" placeholder="البريد الالكتروني او رقم الهاتف" required autofocus>
+              <input type="password" name="password" class="form-control" placeholder="كلمة السر" required>
               <label class="checkbox pull-right text-start">
                   <input type="checkbox" value="remember-me">
                   تذكرني
