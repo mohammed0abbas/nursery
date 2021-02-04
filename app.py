@@ -13,12 +13,19 @@ db = SQL("sqlite:///garden.db")
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, 'templates')
 app = Flask(__name__, template_folder=template_path)
-
+app.secret_key = "212uuHUH87789___221!@#$%^&*()23^tHHH-jju6655GG6gjJUHhygytwstxxww"
 @app.route("/")
 def home():
     profiles = db.execute('select * from nursery')
     return render_template('index.html',profiles=profiles)
 
+
+@app.route("/logout")
+def logout():
+    session.pop('user_id', None)
+    session.pop('name', None)
+    session.pop('email', None)
+    return redirect(('/'))
 
 
 @app.route("/login",methods =['GET','POST'])
@@ -36,6 +43,9 @@ def login():
                return render_template('login.html',err = err)
             
             else:
+               session['user_id'] = ch['id']
+               session['email'] = ch['email']
+               session['name'] = ch['name']
                return redirect('/')
          else:
             err = 'رقم الهاتف او البريد الالكتروني غير موجود'
@@ -75,7 +85,7 @@ def register():
       db.execute('insert into user(name,email,phone,password) values(?,?,?,?)',name,email,phone,request.form.get('password'))
       #s_id = ('select id from user where name = ?',name)
       #session["user_id"] = s_id[0]['id']     
-      return redirect('/')
+      return render_template('login.html',success="register_success" )
 
    else:
       return render_template('register.html')
