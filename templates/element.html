@@ -31,8 +31,7 @@
                       </blockquote>
                 </div>
               <div class="col p-2 text-start">
-                <p>
-                    {{plants.des}} 
+                <p class="_des">
       
                 </p>
              </div>
@@ -87,5 +86,14 @@
         </div>
     </div>
 </section>
-
+<script type="text/javascript">
+  let a =`{{plants.des}}`
+    let p = $('._des')[0]
+    let html = ($.parseHTML(a))
+    nodeNames = [];
+    $.each( html, function( i, el ) {
+  nodeNames[ i ] = "<li>" + el.textContent + "</li>";
+});
+ p.innerHTML = nodeNames
+</script>
 {% include 'footer.html'%}
